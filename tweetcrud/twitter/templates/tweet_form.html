@@ -1,0 +1,77 @@
+{% extends "layout.html" %}
+
+{% block title %}
+{% if form.instance.pk %}
+Edit Tweet
+{% else %}
+Create Tweet
+{% endif %}
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <!-- Page Heading -->
+    <h2 class="text-center text-white mb-4">
+        {% if form.instance.pk %}
+            Edit Tweet
+        {% else %}
+            Create Tweet
+        {% endif %}
+    </h2>
+
+    <!-- Tweet Form -->
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card p-4">
+
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <!-- Text Field -->
+                    <div class="mb-3">
+                        <label class="form-label">Tweet</label>
+                        {{ form.text }}
+                        {% if form.text.errors %}
+                            <div class="text-danger small">
+                                {{ form.text.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Photo Field -->
+                    <div class="mb-3">
+                        <label class="form-label">Photo (optional)</label>
+                        {{ form.photo }}
+                        {% if form.photo.errors %}
+                            <div class="text-danger small">
+                                {{ form.photo.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'tweet_list' %}" class="btn btn-secondary">
+                            Cancel
+                        </a>
+
+                        <button type="submit" class="btn btn-primary">
+                            {% if form.instance.pk %}
+                                Update
+                            {% else %}
+                                Post
+                            {% endif %}
+                        </button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
